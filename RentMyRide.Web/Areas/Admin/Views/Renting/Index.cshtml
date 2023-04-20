@@ -1,0 +1,52 @@
+﻿<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Rentings List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Renting" asp-action="Upsert" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> &nbsp; Create Renting
+            </a>
+        </div>
+    </div>
+    <br /> <br />
+
+    <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    StartDate
+                </th>
+                <th>
+                    EndDate
+                </th>
+                <th>
+                    Status
+                </th>
+@*                <th>
+                    RentalFees
+                </th>
+                <th>
+                    ExtraCharge
+                </th>*@
+                <th>
+                    TotalCharge
+                </th>
+                <th>
+                    PaymentMethod
+                </th>
+                <th>
+                    Car
+                </th>
+                <th>
+                    Customer
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+@section Scripts{
+    <script src="~/js/renting.js"></script>
+}

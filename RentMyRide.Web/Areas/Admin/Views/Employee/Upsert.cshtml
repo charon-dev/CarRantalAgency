@@ -1,0 +1,70 @@
+﻿@model RentMyRide.Models.ViewModels.EmployeeVM
+
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <input asp-for="employee.Id" hidden />
+    <div class="row">
+        <div class="border p-3 mt-4 row">
+            <div class="col-12 pb-2">
+                <h2 class="text-primary">@(Model.employee.Id != 0 ? "Update" : "Create") employee</h2>
+                <hr />
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="employee.FirstName"></label>
+                <input asp-for="employee.FirstName" class="form-control" />
+                <span asp-validation-for="employee.FirstName" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="employee.LastName"></label>
+                <input asp-for="employee.LastName" class="form-control" />
+                <span asp-validation-for="employee.LastName" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="employee.Position"></label>
+                <input asp-for="employee.Position" class="form-control" />
+                <span asp-validation-for="employee.Position" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="employee.PhoneNumber"></label>
+                <input asp-for="employee.PhoneNumber" class="form-control" />
+                <span asp-validation-for="employee.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="employee.Mail"></label>
+                <input asp-for="employee.Mail" class="form-control" />
+                <span asp-validation-for="employee.Mail" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                    <label asp-for="employee.LocationId"></label>
+                <select asp-for="employee.LocationId" asp-items="@Model.LocationList" class="form-select">
+                        <option disabled selected>==Select List==</option>
+                    </select>
+                <span asp-validation-for="employee.LocationId" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                @if (Model.employee.Id != 0)
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+                }
+                else
+                {
+                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+                }
+                <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-secondary" style="">
+                    Back to list
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}
+
+

@@ -19,10 +19,10 @@ namespace RentMyRide.Models
         [ValidateNever]
         public Car Car { get; set; }
 
-        public int AdditionalServiceId { get; set; }
-        [ForeignKey("AdditionalServiceId")]
-        [ValidateNever]
-        public AdditionalService AdditionalService { get; set; }
+        //public int AdditionalServiceId { get; set; }
+        //[ForeignKey("AdditionalServiceId")]
+        //[ValidateNever]
+        //public AdditionalService AdditionalService { get; set; }
 
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]

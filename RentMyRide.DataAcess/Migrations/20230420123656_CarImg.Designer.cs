@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentMyRide.DataAcess.Data;
 
@@ -11,9 +12,10 @@ using RentMyRide.DataAcess.Data;
 namespace RentMyRide.DataAcess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230420123656_CarImg")]
+    partial class CarImg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -399,6 +401,9 @@ namespace RentMyRide.DataAcess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AdditionalServiceId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -431,34 +436,13 @@ namespace RentMyRide.DataAcess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AdditionalServiceId");
+
                     b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("CarId");
 
                     b.ToTable("Renting");
-                });
-
-            modelBuilder.Entity("RentMyRide.Models.Renting_Services", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("AdditionalServiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RentingId")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("AdditionalServiceId");
-
-                    b.HasIndex("RentingId");
-
-                    b.ToTable("Renting_Services");
                 });
 
             modelBuilder.Entity("RentMyRide.Models.Reservation", b =>
@@ -468,6 +452,9 @@ namespace RentMyRide.DataAcess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("AdditionalServiceId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ApplicationUserId")
                         .IsRequired()
@@ -484,34 +471,13 @@ namespace RentMyRide.DataAcess.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AdditionalServiceId");
+
                     b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("CarId");
 
                     b.ToTable("Reservations");
-                });
-
-            modelBuilder.Entity("RentMyRide.Models.Reservation_Services", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
-
-                    b.Property<int>("AdditionalServiceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ReservationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("AdditionalServiceId");
-
-                    b.HasIndex("ReservationId");
-
-                    b.ToTable("Reservation_Services");
                 });
 
             modelBuilder.Entity("RentMyRide.Models.ApplicationUser", b =>
@@ -615,6 +581,12 @@ namespace RentMyRide.DataAcess.Migrations
 
             modelBuilder.Entity("RentMyRide.Models.Renting", b =>
                 {
+                    b.HasOne("RentMyRide.Models.AdditionalService", "AdditionalService")
+                        .WithMany()
+                        .HasForeignKey("AdditionalServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("RentMyRide.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId")
@@ -627,32 +599,21 @@ namespace RentMyRide.DataAcess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("AdditionalService");
+
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Car");
-                });
-
-            modelBuilder.Entity("RentMyRide.Models.Renting_Services", b =>
-                {
-                    b.HasOne("RentMyRide.Models.AdditionalService", "AdditionalService")
-                        .WithMany()
-                        .HasForeignKey("AdditionalServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RentMyRide.Models.Renting", "Renting")
-                        .WithMany()
-                        .HasForeignKey("RentingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AdditionalService");
-
-                    b.Navigation("Renting");
                 });
 
             modelBuilder.Entity("RentMyRide.Models.Reservation", b =>
                 {
+                    b.HasOne("RentMyRide.Models.AdditionalService", "AdditionalService")
+                        .WithMany()
+                        .HasForeignKey("AdditionalServiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("RentMyRide.Models.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId")
@@ -665,28 +626,11 @@ namespace RentMyRide.DataAcess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("AdditionalService");
+
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Car");
-                });
-
-            modelBuilder.Entity("RentMyRide.Models.Reservation_Services", b =>
-                {
-                    b.HasOne("RentMyRide.Models.AdditionalService", "AdditionalService")
-                        .WithMany()
-                        .HasForeignKey("AdditionalServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RentMyRide.Models.Reservation", "Reservation")
-                        .WithMany()
-                        .HasForeignKey("ReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AdditionalService");
-
-                    b.Navigation("Reservation");
                 });
 #pragma warning restore 612, 618
         }

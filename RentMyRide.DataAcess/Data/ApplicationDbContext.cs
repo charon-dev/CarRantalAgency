@@ -20,8 +20,12 @@ namespace RentMyRide.DataAcess.Data
         public DbSet<Location> Locations { get; set; }
         public DbSet<Renting> Renting { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Reservation_Services> Reservation_Services { get; set; }
+        public DbSet<Renting_Services> Renting_Services { get; set; }
+
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
 
 
     }

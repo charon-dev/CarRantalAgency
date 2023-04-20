@@ -19,7 +19,8 @@ namespace RentMyRide.Models
         public string currentMileage { get; set; }
         public double PriceByDay { get; set; }
         public int Places { get; set; }
-
+        [ValidateNever]
+        public string img { get; set; }
         public int LocationId { get; set; }
         [ForeignKey("LocationId")]
         [ValidateNever]

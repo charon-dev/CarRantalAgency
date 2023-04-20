@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using RentMyRide.Utility;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -34,6 +35,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if (User.IsInRole(SD.Role_Admin))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Content management </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Location" asp-action="Index">Location</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="AdditionalService" asp-action="Index">Additional service</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Employee" asp-action="Index">Employee</a>
+                                      <a class="dropdown-item" asp-area="Admin" asp-controller="Car" asp-action="Index">Car</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Renting" asp-action="Index">Renting</a>
+
+                                    @*<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create user</a>*@
+                                </div>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

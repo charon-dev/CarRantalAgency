@@ -11,12 +11,12 @@ namespace RentMyRide.Models
     public class Renting
     {
         public int Id { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime StartDate { get; set; }= DateTime.Now;
+        public DateTime EndDate { get; set; } = DateTime.Now;
         public string Status { get; set; }
         public double RentalFees { get; set; }
-        public double ExtraCharge { get; set; }
-        public double TotalCharge { get; set; }
+        public double ExtraCharge { get; set; } = 0;
+        public double TotalCharge { get; set; } = 0;
         public string PaymentMethod { get; set; }
 
         public int CarId { get; set; }
@@ -24,10 +24,10 @@ namespace RentMyRide.Models
         [ValidateNever]
         public Car Car { get; set; }
 
-        public int AdditionalServiceId { get; set; }
-        [ForeignKey("AdditionalServiceId")]
-        [ValidateNever]
-        public AdditionalService AdditionalService { get; set; }
+        //public int AdditionalServiceId { get; set; }
+        //[ForeignKey("AdditionalServiceId")]
+        //[ValidateNever]
+        //public AdditionalService AdditionalService { get; set; }
 
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]

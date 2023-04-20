@@ -1,0 +1,90 @@
+﻿@model RentMyRide.Models.ViewModels.RentingVM
+
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <input asp-for="renting.Id" hidden />
+    <div class="row">
+        <div class="border p-3 mt-4 row">
+            <div class="col-12 pb-2">
+                <h2 class="text-primary">@(Model.renting.Id != 0 ? "Update" : "Create") renting</h2>
+                <hr />
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="renting.StartDate"></label>
+                <input asp-for="renting.StartDate" class="form-control" />
+                <span asp-validation-for="renting.StartDate" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="renting.EndDate"></label>
+                <input asp-for="renting.EndDate" class="form-control" />
+                <span asp-validation-for="renting.EndDate" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="renting.Status"></label>
+                <input asp-for="renting.Status" class="form-control" />
+                <span asp-validation-for="renting.Status" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="renting.RentalFees"></label>
+                <input asp-for="renting.RentalFees" class="form-control" />
+                <span asp-validation-for="renting.RentalFees" class="text-danger"></span>
+            </div>
+            @if (Model.renting.Id != 0)
+            {
+                <div class="mb-3 col-6">
+                    <label asp-for="renting.ExtraCharge"></label>
+                    <input asp-for="renting.ExtraCharge" class="form-control" />
+                    <span asp-validation-for="renting.ExtraCharge" class="text-danger"></span>
+                </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="renting.TotalCharge"></label>
+                    <input asp-for="renting.TotalCharge" class="form-control" />
+                    <span asp-validation-for="renting.TotalCharge" class="text-danger"></span>
+                </div>
+            }                      
+            <div class="mb-3 col-6">
+                <label asp-for="renting.PaymentMethod"></label>
+                <input asp-for="renting.PaymentMethod" class="form-control" />
+                <span asp-validation-for="renting.PaymentMethod" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="renting.CarId"></label>
+                <select asp-for="renting.CarId" asp-items="@Model.CarList" class="form-select">
+                        <option disabled selected>==Select Car==</option>
+                    </select>
+                <span asp-validation-for="renting.CarId" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="renting.ApplicationUserId"></label>
+                <select asp-for="renting.ApplicationUserId" asp-items="@Model.UsersList" class="form-select">
+                    <option disabled selected>==Select User==</option>
+                </select>
+                <span asp-validation-for="renting.ApplicationUserId" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                @if (Model.renting.Id != 0)
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+                }
+                else
+                {
+                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+                }
+                <a asp-controller="Renting" asp-action="Index" class="btn btn-outline-secondary" style="">
+                    Back to list
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+}
+
+

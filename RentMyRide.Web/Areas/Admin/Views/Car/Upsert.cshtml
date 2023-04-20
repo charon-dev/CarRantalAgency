@@ -1,0 +1,109 @@
+﻿@model RentMyRide.Models.ViewModels.CarVM
+
+
+<form method="post" asp-action="Upsert" enctype="multipart/form-data">
+    <input asp-for="car.Id" hidden />
+    <input asp-for="car.img" hidden />
+
+    <div class="row">
+        <div class="col-10">
+        <div class="border p-3 mt-4 row">
+            <div class="col-12 pb-2">
+                <h2 class="text-primary">@(Model.car.Id != 0 ? "Update" : "Create") car</h2>
+                <hr />
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="car.Make"></label>
+                <input asp-for="car.Make" class="form-control" />
+                <span asp-validation-for="car.Make" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="car.Model"></label>
+                <input asp-for="car.Model" class="form-control" />
+                <span asp-validation-for="car.Model" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="car.Year"></label>
+                <input asp-for="car.Year" class="form-control" />
+                <span asp-validation-for="car.Year" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="car.Color"></label>
+                <input asp-for="car.Color" class="form-control" />
+                <span asp-validation-for="car.Color" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="car.LicensePlateNumber"></label>
+                <input asp-for="car.LicensePlateNumber" class="form-control" />
+                <span asp-validation-for="car.LicensePlateNumber" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="car.currentMileage"></label>
+                <input asp-for="car.currentMileage" class="form-control" />
+                <span asp-validation-for="car.currentMileage" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="car.PriceByDay"></label>
+                <input asp-for="car.PriceByDay" class="form-control" />
+                <span asp-validation-for="car.PriceByDay" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="car.Places"></label>
+                <input asp-for="car.Places" class="form-control" />
+                <span asp-validation-for="car.Places" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="car.img"></label>
+                <input id="UploadBox" type="file" name="file" class="form-control" />
+            </div>
+            <div class="mb-3 col-6">
+                    <label asp-for="car.LocationId"></label>
+                <select asp-for="car.LocationId" asp-items="@Model.LocationList" class="form-select">
+                        <option disabled selected>==Select List==</option>
+                    </select>
+                <span asp-validation-for="car.LocationId" class="text-danger"></span>
+            </div>
+            <div class="col-12">
+                @if (Model.car.Id != 0)
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+                }
+                else
+                {
+                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+                }
+                <a asp-controller="Car" asp-action="Index" class="btn btn-outline-secondary" style="">
+                    Back to list
+                </a>
+            </div>
+
+        </div>
+        </div>
+        <div class="col-2 mt-4">
+            <img src="@Model.car.img"
+                 style="width: 100%;border-radius:5px;border:1px solid #bbb9b9" />
+        </div>
+    </div>
+
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+    <script>
+        function ValidateInput() {
+            if (document.getElementById("UploadBox").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Pleas upload an Image!',
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
+}
+
+
