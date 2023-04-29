@@ -21,6 +21,10 @@ namespace RentMyRide.DataAcess.Repository
         public IApplicationUserRepository ApplicationUser { get; private set; }
         public IRentingRepository Renting { get; private set; }
         public IReservationRepository Reservation { get; private set; }
+        public IRentingServicesRepository RentingServices { get; private set; }
+        public IReservationServicesRepository ReservationServices { get; private set; }
+
+        
 
 
         public UnitOfWork(ApplicationDbContext db)
@@ -34,6 +38,9 @@ namespace RentMyRide.DataAcess.Repository
             Renting = new RentingRepository(_db);
             Reservation = new ReservationRepository(_db);
             ApplicationUser = new ApplicationUserRepository(_db);
+            RentingServices = new RentingServicesRepository(_db);
+            ReservationServices = new ReservationServicesRepository(_db);
+
         }
 
         public void Save()

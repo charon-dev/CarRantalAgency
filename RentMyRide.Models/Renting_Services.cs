@@ -14,11 +14,13 @@ namespace RentMyRide.Models
         [Key]
         public int id { get; set; }
 
+        [Display(Name = "Additional service")]
         public int AdditionalServiceId { get; set; }
         [ForeignKey("AdditionalServiceId")]
         [ValidateNever]
         public AdditionalService AdditionalService { get; set; }
 
+        [Display(Name = "Renting")]
         public int RentingId { get; set; }
         [ForeignKey("RentingId")]
         [ValidateNever]

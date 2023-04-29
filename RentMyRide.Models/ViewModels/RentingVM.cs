@@ -15,5 +15,17 @@ namespace RentMyRide.Models.ViewModels
         public IEnumerable<SelectListItem> CarList { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> UsersList { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem> StatusList { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem> PaymentList { get; set; }
+        [ValidateNever]
+        public IEnumerable<AdditionalService> AdditionalServices { get; set; }
+        [ValidateNever]
+        public IEnumerable<Renting_Services> Renting_Services { get; set; }
+        [ValidateNever]
+        public Renting_Services Renting_Service { get; set; }
+
+
     }
 }

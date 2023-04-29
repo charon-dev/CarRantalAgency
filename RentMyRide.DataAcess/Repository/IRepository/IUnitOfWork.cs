@@ -17,6 +17,10 @@ namespace RentMyRide.DataAcess.Repository.IRepository
         ILocationRepository Location { get; }
         IRentingRepository Renting { get; }
         IReservationRepository Reservation { get; }
+        IRentingServicesRepository RentingServices { get; }
+        IReservationServicesRepository ReservationServices { get; }
+
+
         void Save();
     }
 }

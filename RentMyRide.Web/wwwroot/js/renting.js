@@ -1,5 +1,6 @@
 ﻿var dataTable;
 
+
 $(document).ready(function () {
     loadDataTable();
 });
@@ -10,13 +11,12 @@ function loadDataTable() {
             "url": "/Admin/Renting/GetAll"
         },
         "columns": [
-            { "data": "startDate", "widht": "15%" },
-            { "data": "endDate", "widht": "15%" },
-            { "data": "status", "widht": "15%" },
-            { "data": "totalCharge", "widht": "15%" },
-            { "data": "paymentMethod", "widht": "15%" },
-            { "data": "car.make", "widht": "15%" },
-            { "data": "applicationUser.firstName", "widht": "15%" },
+            { "data": "startDate", "widht": "10%" },
+            { "data": "endDate", "widht": "10%" },
+            { "data": "status", "widht": "10%" },
+            { "data": "totalCharge", "widht": "10%" },
+            { "data": "car.make", "widht": "10%" },
+            { "data": "applicationUser.firstName", "widht": "10%" },
 
             {
                 "data": "id",
@@ -36,6 +36,7 @@ function loadDataTable() {
             },
         ]
     });
+
 }
 
 function Delete(url) {

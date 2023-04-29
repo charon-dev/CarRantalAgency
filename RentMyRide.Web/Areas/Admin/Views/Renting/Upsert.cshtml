@@ -21,16 +21,19 @@
             </div>
             <div class="mb-3 col-6">
                 <label asp-for="renting.Status"></label>
-                <input asp-for="renting.Status" class="form-control" />
+                <select asp-for="renting.Status" asp-items="@Model.StatusList" class="form-select">
+                    <option disabled selected>==Select status==</option>
+                </select>
                 <span asp-validation-for="renting.Status" class="text-danger"></span>
             </div>
-            <div class="mb-3 col-6">
-                <label asp-for="renting.RentalFees"></label>
-                <input asp-for="renting.RentalFees" class="form-control" />
-                <span asp-validation-for="renting.RentalFees" class="text-danger"></span>
-            </div>
+            
             @if (Model.renting.Id != 0)
             {
+                <div class="mb-3 col-6">
+                    <label asp-for="renting.RentalFees"></label>
+                    <input asp-for="renting.RentalFees" class="form-control" />
+                    <span asp-validation-for="renting.RentalFees" class="text-danger"></span>
+                </div>
                 <div class="mb-3 col-6">
                     <label asp-for="renting.ExtraCharge"></label>
                     <input asp-for="renting.ExtraCharge" class="form-control" />
@@ -41,17 +44,19 @@
                     <input asp-for="renting.TotalCharge" class="form-control" />
                     <span asp-validation-for="renting.TotalCharge" class="text-danger"></span>
                 </div>
-            }                      
+            }
             <div class="mb-3 col-6">
                 <label asp-for="renting.PaymentMethod"></label>
-                <input asp-for="renting.PaymentMethod" class="form-control" />
+                <select asp-for="renting.PaymentMethod" asp-items="@Model.PaymentList" class="form-select">
+                    <option disabled selected>==Select Payment method==</option>
+                </select>
                 <span asp-validation-for="renting.PaymentMethod" class="text-danger"></span>
             </div>
             <div class="mb-3 col-6">
                 <label asp-for="renting.CarId"></label>
                 <select asp-for="renting.CarId" asp-items="@Model.CarList" class="form-select">
-                        <option disabled selected>==Select Car==</option>
-                    </select>
+                    <option disabled selected>==Select Car==</option>
+                </select>
                 <span asp-validation-for="renting.CarId" class="text-danger"></span>
             </div>
             <div class="mb-3 col-6">
@@ -61,6 +66,60 @@
                 </select>
                 <span asp-validation-for="renting.ApplicationUserId" class="text-danger"></span>
             </div>
+
+            @if (Model.renting.Id == 0) { 
+                <div class="mb-3 col-6 card border-secondary">
+                    <div class="card-header">
+                        Additional Services
+                    </div>
+
+                    <div class="card-body">
+                        @foreach (var item in Model.AdditionalServices)
+                        {
+                            <input class="form-check-input" type="checkbox" id="@item.Name" value="true" name="MyCheckboxes_@item.Id">
+                            <label class="form-check-label" style="color:black" for="@item.Name">
+                                @item.Name
+                            </label>
+                            <br />
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                   <h5>Additional Services: </h5>
+                    <table id="" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th width="40%">
+                                    Name
+                                </th>
+                                <th width="40%">
+                                    Price
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Renting_Services)
+                            {
+                            <tr>
+                                <td width="40%">
+                                    @item.AdditionalService.Name
+                                </td>
+                                <td width="40%">
+                                    @item.AdditionalService.Price
+                                </td>
+                                <td>
+                                    <a class="btn btn-danger" asp-controller="Renting" asp-action="Remove" asp-route-Id="@item.id">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+            }
             <div class="col-12">
                 @if (Model.renting.Id != 0)
                 {
@@ -84,7 +143,6 @@
     @{
         <partial name="_ValidationScriptsPartial" />
     }
-
 }
 
 
