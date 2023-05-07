@@ -15,14 +15,14 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <link rel="stylesheet" href="~/css/BootsWatch.css" />
-
+    <link rel="stylesheet" href="~/css/CustomStyle.css" />
 
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RentMyRide.Web</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RentMyRide</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -33,8 +33,11 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="" asp-action="Index">Cars</a>
                         </li>
+                        @*<li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>*@
                         @if (User.IsInRole(SD.Role_Admin))
                         {
                             <li class="nav-item dropdown">
@@ -64,9 +67,15 @@
         </main>
     </div>
 
-    <footer class="border-top bg-primary footer text-muted" style="bottom:0;width:100%;position:absolute;">
-        <div class="container text-light">
-            &copy; 2023 - RentMyRide.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top bg-black footer text-muted">
+        <div class="container text-light row ">
+            <div class="col-12 mt-2">
+                <a href="#" class="text-info"><i class="bi bi-facebook mx-2"></i></a> <a href="#" class="text-info"><i class="bi bi-instagram mx-2"></i></a>  <a href="#" class="text-info"><i class="bi bi-twitter mx-2"></i></a>
+            </div>
+
+            <div class="col mx-2 mb-3">
+                <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-light">Privacy</a> | &copy; 2023 RentMyRide, Inc. All Rights Reserved
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

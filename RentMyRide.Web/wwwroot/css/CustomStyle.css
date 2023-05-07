@@ -1,0 +1,75 @@
+﻿.outOfContainer {
+    padding: 50px;
+    position: relative;
+    left: calc(-50vw + 50%);
+    width: 100vw;
+}
+
+.translate-default {
+    transform: translate(0, 0);
+}
+
+.translate-sm {
+    transform: translate(10px,-17px);
+}
+
+@media (min-width: 576px) {
+    .translate-md {
+        transform: translate(3px,-17px)
+    }
+}
+
+@media (min-width: 768px) {
+    .translate-lg {
+        transform: translate(3px,-17px)
+    }
+}
+
+@media (min-width: 992px) {
+    .translate-xl {
+        transform: translate(3px,-17px)
+    }
+}
+
+.SecDiv-sm {
+    transform: translateX(10px);
+    margin:auto
+}
+
+@media (min-width: 576px) {
+    .SecDiv-md {
+        margin: auto;
+        transform: translate(10px,10px);
+    }
+}
+
+.ThirdDiv-sm {
+    transform: translateX(10px);
+}
+
+@media (min-width: 576px) {
+    .ThirdDiv-md {
+        transform: translateX(0px);
+    }
+}
+
+
+.CarsDiv-sm {
+    width: 370px
+}
+
+@media (min-width: 576px) {
+    .CarsDiv-md {
+        width: 250px;
+    }
+}
+
+.FeedbackDiv-sm {
+    transform: translate(10px,17px);
+}
+
+@media (min-width: 576px) {
+    .FeedbackDiv-sm {
+        transform: translate(3px,17px);
+    }
+}

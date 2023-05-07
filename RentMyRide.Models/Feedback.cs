@@ -16,6 +16,7 @@ namespace RentMyRide.Models
         public DateTime Date { get; set; } = DateTime.Now;
         public string Comment { get; set; }
         [Display(Name = "User")]
+        [Required]
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]
