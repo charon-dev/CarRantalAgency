@@ -33,12 +33,22 @@ namespace RentMyRide.Web.Areas.Admin.Controllers
         //Get
         public IActionResult Upsert(int? Id)
         {
+            var GearType = new List<string>()
+            {
+                "Manual",
+                "Automatic",
+            };
             CarVM carVM = new() {
                 car = new(),
                 LocationList = _UnitOfWork.Location.GetAll().Select(i => new SelectListItem
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
+                }),
+                GearboxTypes = GearType.Select(i => new SelectListItem
+                {
+                    Text = i,
+                    Value = i
                 })
             };
             

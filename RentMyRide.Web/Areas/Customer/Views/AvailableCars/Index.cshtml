@@ -1,0 +1,207 @@
+﻿@model RentMyRide.Models.ViewModels.AvailableCarsVM
+
+<div class="row">
+    <div id="accordionExample" class="col-lg-3 col-md-3 card border-dark mb-4 accordion" style="height:-webkit-fit-content">
+        <form id="TheForm" method="get" asp-controller="AvailableCarsController" asp-action="Index">
+            <h4 class="fw-bold text-center mt-3">Filters</h4>
+
+             <hr />
+            <div class="accordion-item">
+                <h5 id="Make headingOne" class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Make
+                    </button>
+                </h5>
+                <div id="collapseOne" class="row accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                    <div id="DMake" class="form-check mx-4 accordion-body">
+
+                        @foreach (var make in Model.MakesList)
+                        {
+                            <input class="form-check-input" type="checkbox" id="@make" value="@make" name="makeFilter">
+                            <label class="form-check-label" style="color:black" for="make">
+                                @make
+                            </label>
+                            <br />
+                        }
+
+                    </div>
+                </div>
+            </div>
+            
+            <hr />
+            <div class="accordion-item">
+                <h5 id="Gearbox headingTwo" class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        Gearbox
+                    </button>
+                </h5>
+                <div id="collapseTwo" class="row accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" style="">
+                    <div id="DGearbox" class="form-check mx-4 accordion-body">
+                        @foreach (var Gearbox in Model.GearboxesList)
+                        {
+                            <input class="form-check-input" type="radio" id="@Gearbox" value="@Gearbox" name="GearboxFilter">
+                            <label class="form-check-label" style="color:black" for="Gearbox">@Gearbox</label>
+                            <br />
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+            <div class="accordion-item">
+                <h5 id="Gearbox headingThree" class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        Colors
+                    </button>
+                </h5>
+                <div id="collapseThree" class="row accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample" style="">
+                    <div id="DColors" class="form-check mx-4 accordion-body">
+                        @foreach (var color in Model.ColorsList)
+                        {
+                            <input class="form-check-input" type="checkbox" id="@color" value="@color" name="colorsFilter">
+                            <label class="form-check-label" style="color:black" for="color">@color</label>
+                            <br />
+                        }
+                    </div>
+                </div>
+            </div>
+
+
+            <hr />
+            <div class="accordion-item">
+                <h5 id="Locations headingFour" class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                        Locations
+                    </button>
+                </h5>
+                <div id="collapseFour" class="row accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample" style="">
+                    <div id="DLocations" class="form-check mx-4 accordion-body">
+                        @foreach (var Location in Model.LocationsList)
+                        {
+                            <input class="form-check-input" type="checkbox" id="@Location.Name" value="@Location.Name" name="LocationFilter">
+                            <label class="form-check-label" style="color:black" for="Location">@Location.Name</label>
+                            <br />
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+            <div class="row">
+                <h5 id="Price">Price</h5>
+                <div id="DLocations" class="form-check input-group">                   
+                    <input asp-for="@Model.Price" type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                    <span class="input-group-text">MAD</span>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <h5 id="Places">Places</h5>
+                <div id="DPlaces" class="form-check mx-1 input-group">
+                    <div class="form-check col-12">
+                        <input class="form-check-input" type="radio" id="two" value="2" name="Places">
+                        <label class="form-check-label" style="color:black" for="two">2</label>
+                    </div>
+                    <div class="form-check col-12">
+                        <input class="form-check-input" type="radio" id="four" value="4" name="Places">
+                        <label class="form-check-label" style="color:black" for="four">4</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="five" value="5" name="Places">
+                        <label class="form-check-label" style="color:black" for="Places">5</label>
+                    </div>
+
+                    
+                </div>
+            </div>
+            <hr />
+            <div class="row mt-2">
+                <button onclick="filterProducts()" type="button" class="btn btn-primary w-100" id="filterButton">
+                    filter
+                </button>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="col">
+        @foreach (var item in Model.cars)
+        {
+            <div class="card border-dark mb-3">   
+                <div class="row p-4">
+                    <div class="col-md-4 col-sm-12">
+                        <img src="@item.img" class="w-100">
+                    </div>
+                    <div class="col">
+                        <h3 class="fw-bold">@item.Make @item.Model</h3>
+                        <div class="row mb-1">
+                            <i class="bi bi-people-fill col-4">@item.Places</i>
+                            <div class="col-4">
+                                @if (item.Gearbox == "Manual")
+                                {
+                                    <p class="fw-bold" style="cursor:pointer;width:fit-content" data-toggle="tooltip" data-placement="top" title="Manual">M</p>
+                                }
+                                else
+                                {
+                                    <p class="fw-bold" style="cursor:pointer;width:fit-content" data-toggle="tooltip" data-placement="top" title="Automatic">A</p>
+                                }
+                            </div>
+                            <div class="border border-primary col-4" style="background-color:@item.Color;width:10px;height:20px"></div>
+                        </div>
+                        <p><i class="bi bi-geo-alt-fill"></i> @item.Location.Name</p>
+                        <hr>
+                        <div class="row">
+                            <div class="col-6">
+                                <ul>
+                                    <li>
+                                        free cancellation
+                                    </li>
+                                    <li>
+                                        Identical tank
+                                    </li>
+                                    <li>
+                                        Unlimited kilometers
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-6">
+                                <ul>
+                                    <li>
+                                    collision damage waiver
+                                    </li>
+                                    <li>
+                                        Protection against theft
+                                    </li>
+                                    <li>
+                                        liability insurance
+                                    </li>
+                                </ul>
+                    
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row" style="position:relative">
+                                <p class="fw-bold">@item.PriceByDay MAD/Day</p>
+                                <a class="btn btn-primary">Make a reservation</a>
+                        </div>
+                    </div>
+                   @* *@
+                </div>
+        
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+@section Scripts{
+    <script>
+      $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+      });
+    </script>
+}
+
+

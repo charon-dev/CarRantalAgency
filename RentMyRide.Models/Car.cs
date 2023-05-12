@@ -25,6 +25,7 @@ namespace RentMyRide.Models
         [DisplayName("Price by day")]
         public double PriceByDay { get; set; }
         public int Places { get; set; }
+        public string Gearbox { get; set; }
         [ValidateNever]
         public string img { get; set; }
         [Display(Name = "Location")]

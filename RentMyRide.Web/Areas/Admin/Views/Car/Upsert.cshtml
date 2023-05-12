@@ -52,6 +52,13 @@
                 <input asp-for="car.Places" class="form-control" />
                 <span asp-validation-for="car.Places" class="text-danger"></span>
             </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="car.Gearbox"></label>
+                    <select asp-for="car.Gearbox" asp-items="@Model.GearboxTypes" class="form-select">
+                        <option disabled selected>==Select gearbox type==</option>
+                    </select>
+                    <span asp-validation-for="car.Gearbox" class="text-danger"></span>
+                </div>
             <div class="mb-3">
                 <label asp-for="car.img"></label>
                 <input id="UploadBox" type="file" name="file" class="form-control" />

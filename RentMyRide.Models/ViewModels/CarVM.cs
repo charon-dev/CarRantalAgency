@@ -13,5 +13,7 @@ namespace RentMyRide.Models.ViewModels
         public Car car { get; set; }
         [ValidateNever]
         public IEnumerable<SelectListItem> LocationList { get; set; }
+        [ValidateNever]
+        public IEnumerable<SelectListItem> GearboxTypes { get; set; }
     }
 }
