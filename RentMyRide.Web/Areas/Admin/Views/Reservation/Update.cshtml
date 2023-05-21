@@ -1,0 +1,90 @@
+﻿@model RentMyRide.Models.ViewModels.ReservationVM
+
+
+<form method="post" asp-action="Update">
+    <input asp-for="reservation.Id" hidden />
+    <input asp-for="reservation.CarId" hidden value="@Model.currentCar.Id" />
+    <input asp-for="reservation.ApplicationUserId" hidden />
+
+    <div class="row">
+        <div class="border p-3 mt-4 row">
+            <div class="col-12 pb-2">
+                <h2 class="text-primary">@(Model.reservation.Id != 0 ? "Update" : "Create") reservation</h2>
+                <hr />
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="reservation.PickUpDate"></label>
+                <input asp-for="reservation.PickUpDate" class="form-control" />
+                <span asp-validation-for="reservation.PickUpDate" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="reservation.DropOffDate"></label>
+                <input asp-for="reservation.DropOffDate" class="form-control" />
+                <span asp-validation-for="reservation.DropOffDate" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="reservation.Status"></label>
+                <select asp-for="reservation.Status" asp-items="@Model.StatusList" class="form-select">
+                    <option disabled selected>==Select status==</option>
+                </select>
+                <span asp-validation-for="reservation.Status" class="text-danger"></span>
+            </div>
+            <h5>Additional Services: </h5>
+            <table id="" class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th width="40%">
+                            Name
+                        </th>
+                        <th width="40%">
+                            Price
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Reservation_Services)
+                    {
+                        <tr>
+                            <td width="40%">
+                                @item.AdditionalService.Name
+                            </td>
+                            <td width="40%">
+                                @item.AdditionalService.Price
+                            </td>
+                            <td>
+                                <a class="btn btn-danger" asp-controller="Reservation" asp-action="Remove" asp-route-Id="@item.id">
+                                    <i class="bi bi-trash-fill"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div class="col-12">
+                @if (Model.reservation.Id != 0)
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+                }
+                else
+                {
+                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+                }
+                <a asp-controller="Reservation" asp-action="Index" class="btn btn-outline-secondary" style="">
+                    See all reservations
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+

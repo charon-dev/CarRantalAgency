@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace RentMyRide.Models.ViewModels
 {
@@ -15,7 +16,6 @@ namespace RentMyRide.Models.ViewModels
         public int Places { get; set; }
         public IEnumerable<string> GearboxesList { get; set; }
         public IEnumerable<Location> LocationsList { get; set; }
-
-
+        public IPagedList<Car> PagedCars { get; set; }
     }
 }

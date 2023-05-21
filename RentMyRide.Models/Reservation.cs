@@ -15,9 +15,10 @@ namespace RentMyRide.Models
     {
         public int Id { get; set; }
         [DisplayName("Pick up date")]
-        public DateTime  PickUpDate{ get; set; }
+        public DateTime  PickUpDate{ get; set; } = DateTime.Now;
         [DisplayName("Drop off date")]
-        public DateTime DropOffDate { get; set; }
+        public DateTime DropOffDate { get; set; } = DateTime.Now;
+        public string Status { get; set; } = "Pending";  
 
         [Display(Name = "Car")]
         public int CarId { get; set; }

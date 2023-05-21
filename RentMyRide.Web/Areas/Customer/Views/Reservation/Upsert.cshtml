@@ -1,0 +1,76 @@
+﻿@model RentMyRide.Models.ViewModels.ReservationVM
+
+
+<form method="post" asp-action="Upsert">
+    <input asp-for="reservation.Id" hidden />
+    <input asp-for="reservation.CarId" hidden value="@Model.currentCar.Id" />
+
+    <div class="row">
+        <div class="border p-3 mt-4 row">
+            <div class="col-12 pb-2">
+                <h2 class="text-primary">@(Model.reservation.Id != 0 ? "Update" : "Create") reservation</h2>
+                <hr />
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="reservation.PickUpDate"></label>
+                <input asp-for="reservation.PickUpDate" class="form-control" />
+                <span asp-validation-for="reservation.PickUpDate" class="text-danger"></span>
+            </div>
+            <div class="mb-3 col-6">
+                <label asp-for="reservation.DropOffDate"></label>
+                <input asp-for="reservation.DropOffDate" class="form-control" />
+                <span asp-validation-for="reservation.DropOffDate" class="text-danger"></span>
+            </div>
+            
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="mb-3 col-6">
+                    <label asp-for="reservation.ApplicationUserId"></label>
+                    <select asp-for="reservation.ApplicationUserId" asp-items="@Model.Users" class="form-select">
+                        <option disabled selected>==Select User==</option>
+                    </select>
+                    <span asp-validation-for="reservation.ApplicationUserId" class="text-danger"></span>
+                </div>
+            }
+            <div class="mb-3 col-6 card border-secondary">
+                <div class="card-header">
+                    Additional Services
+                </div>
+
+                <div class="card-body">
+                    @foreach (var item in Model.AdditionalServices)
+                    {
+                        <input class="form-check-input" type="checkbox" id="@item.Name" value="true" name="MyCheckboxes_@item.Id">
+                        <label class="form-check-label" style="color:black" for="@item.Name">
+                            @item.Name
+                        </label>
+                        <br />
+                    }
+                </div>
+            </div>
+            <div class="col-12">
+                @if (Model.reservation.Id != 0)
+                {
+                    <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
+                }
+                else
+                {
+                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+                }
+                <a asp-controller="Reservation" asp-action="Index" class="btn btn-outline-secondary" style="">
+                    See all reservations
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+

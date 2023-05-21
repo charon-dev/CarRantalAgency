@@ -1,4 +1,9 @@
 ﻿@using RentMyRide.Utility;
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,9 +40,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="Customer" asp-controller="AvailableCars" asp-action="Index">Cars</a>
                         </li>
-                        @*<li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>*@
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Content</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-area="Customer" asp-controller="Reservation" asp-action="Index">Reservations</a>
+                                    <a class="dropdown-item" asp-area="Customer" asp-controller="Renting" asp-action="Index">Rental history</a>
+                                </div>
+                            </li>
+                        }
                         @if (User.IsInRole(SD.Role_Admin))
                         {
                             <li class="nav-item dropdown">
@@ -49,6 +62,7 @@
                                       <a class="dropdown-item" asp-area="Admin" asp-controller="Car" asp-action="Index">Car</a>
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="Renting" asp-action="Index">Renting</a>
                                     <a class="dropdown-item" asp-area="Admin" asp-controller="FeedBacks" asp-action="Index">Feedback</a>
+                                    <a class="dropdown-item" asp-area="Admin" asp-controller="Reservation" asp-action="Index">Reservation</a>
 
                                     @*<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create user</a>*@
                                 </div>

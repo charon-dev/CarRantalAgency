@@ -1,4 +1,7 @@
-﻿@model RentMyRide.Models.ViewModels.AvailableCarsVM
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common;
+
+@model RentMyRide.Models.ViewModels.AvailableCarsVM
 
 <div class="row">
     <div id="accordionExample" class="col-lg-3 col-md-3 card border-dark mb-4 accordion" style="height:-webkit-fit-content">
@@ -125,7 +128,7 @@
     </div>
 
     <div class="col">
-        @foreach (var item in Model.cars)
+        @foreach (var item in Model.PagedCars)
         {
             <div class="card border-dark mb-3">   
                 <div class="row p-4">
@@ -182,7 +185,7 @@
                         <hr>
                         <div class="row" style="position:relative">
                                 <p class="fw-bold">@item.PriceByDay MAD/Day</p>
-                                <a class="btn btn-primary">Make a reservation</a>
+                                <a class="btn btn-primary" asp-area="Customer" asp-controller="Reservation" asp-action="Upsert" asp-route-CarId="@item.Id">Make a reservation</a>
                         </div>
                     </div>
                    @* *@
@@ -190,6 +193,55 @@
         
             </div>
         }
+    </div>
+    <div class="pagination-container d-flex justify-content-center align-items-center my-5">
+        <nav>
+            <ul class="pagination">
+
+                @if (Model.PagedCars.HasPreviousPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", new { page = Model.PagedCars.PageNumber - 1 })">&laquo;</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">&laquo;</a>
+                    </li>
+                }
+
+                @for (int i = 1; i <= Model.PagedCars.PageCount; i++)
+                {
+                    if (Model.PagedCars.PageNumber == i)
+                    {
+                        <li class="page-item active">
+                            <a class="page-link" href="#">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                        </li>
+                    }
+                }
+
+                @if (Model.PagedCars.HasNextPage)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index", new { page = Model.PagedCars.PageNumber + 1 })">&raquo;</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">&raquo;</a>
+                    </li>
+                }
+
+            </ul>
+        </nav>
     </div>
 </div>
 
