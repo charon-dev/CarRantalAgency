@@ -9,7 +9,7 @@
     <div class="row">
         <div class="border p-3 mt-4 row">
             <div class="col-12 pb-2">
-                <h2 class="text-primary">@(Model.reservation.Id != 0 ? "Update" : "Create") reservation</h2>
+                <h2 class="text-primary">Update reservation</h2>
                 <hr />
             </div>
             <div class="mb-3 col-6">
@@ -29,7 +29,18 @@
                 </select>
                 <span asp-validation-for="reservation.Status" class="text-danger"></span>
             </div>
-            <h5>Additional Services: </h5>
+            <div class="row pt-4 mb-3">
+                <div class="col-6">
+                    <h5>Additional Services: </h5>
+                </div>
+                <div class="col-6 text-end">
+                    <a asp-controller="Reservation" asp-action="CreateAdditionalService" asp-route-id="@Model.reservation.Id" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> &nbsp; Add Additional services
+                    </a>
+
+
+                </div>
+            </div>
             <table id="" class="table table-bordered table-striped" style="width:100%">
                 <thead>
                     <tr>

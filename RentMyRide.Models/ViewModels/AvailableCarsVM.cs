@@ -17,5 +17,10 @@ namespace RentMyRide.Models.ViewModels
         public IEnumerable<string> GearboxesList { get; set; }
         public IEnumerable<Location> LocationsList { get; set; }
         public IPagedList<Car> PagedCars { get; set; }
+        public IEnumerable<string> SelectedMakeFilters { get; set; }
+        public string SelectedGearboxFilter { get; set; }
+        public IEnumerable<string> SelectedColorsFilters { get; set; }
+        public IEnumerable<string> SelectedLocationFilters { get; set; }
+
     }
 }

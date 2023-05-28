@@ -1,0 +1,33 @@
+﻿@model List<AdditionalService>
+
+
+<div class="row my-5">
+    <div class="border p-3 mt-4 row">
+        <div class="col-12 pb-2">
+            <h2 class="text-primary">Add Additional Service to the current reservation</h2>
+            <hr />
+        </div>
+        <form method="post" asp-controller="Reservation" asp-action="CreateAdditionalService">
+
+            <div class="mb-3 col-6 card border-secondary">
+                <div class="card-header">
+                    Additional Services
+                </div>
+
+                <div class="card-body">
+                    @foreach (var item in Model)
+                    {
+                        <input class="form-check-input" type="checkbox" id="@item.Name" value="true" name="MyCheckboxes_@item.Id">
+                        <label class="form-check-label" style="color:black" for="@item.Name">
+                            @item.Name
+                        </label>
+                        <br />
+                    }
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+    </div>
+
+</div>

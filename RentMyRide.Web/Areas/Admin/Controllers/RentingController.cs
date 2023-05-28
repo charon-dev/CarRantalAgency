@@ -66,7 +66,7 @@ namespace RentMyRide.Web.Areas.Admin.Controllers
                 AdditionalServices = _UnitOfWork.AdditionalService.GetAll(),
                 Renting_Services = new List<Renting_Services>()
             };
-            
+
             if (Id == null || Id == 0)
             {
                 //Create 
@@ -88,10 +88,10 @@ namespace RentMyRide.Web.Areas.Admin.Controllers
         {
 
             if (ModelState.IsValid)
-            {                
+            {
                 if (obj.renting.Id == 0)
                 {
-                    
+
                     //Create renting
                     obj.renting.TotalCharge = obj.renting.RentalFees;
                     _UnitOfWork.Renting.Add(obj.renting);
@@ -113,7 +113,7 @@ namespace RentMyRide.Web.Areas.Admin.Controllers
                                 RentingId = obj.renting.Id,
                                 AdditionalServiceId = item.Id
                             };
-                                                    
+
                             _UnitOfWork.RentingServices.Add(renting_Services);
                             _UnitOfWork.Save();
                             var Renting_servicesPrice = _UnitOfWork.RentingServices.GetFirstOrDefault(u => u.id == renting_Services.id, includeProperties: "AdditionalService").AdditionalService.Price;
@@ -134,7 +134,7 @@ namespace RentMyRide.Web.Areas.Admin.Controllers
 
                         }
                     }
-                    
+
                 }
                 else
                 {
@@ -166,7 +166,7 @@ namespace RentMyRide.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult RemovePOST(int? Id)
         {
-            
+
             var Obj = _UnitOfWork.RentingServices.GetFirstOrDefault(u => u.id == Id, includeProperties: "AdditionalService");
             var CurrentRenting = _UnitOfWork.Renting.GetFirstOrDefault(u => u.Id == Obj.RentingId);
             if (Obj == null)
@@ -179,8 +179,101 @@ namespace RentMyRide.Web.Areas.Admin.Controllers
             _UnitOfWork.Renting.Update(CurrentRenting);
             _UnitOfWork.Save();
             TempData["success"] = "Renting Service deleted successfuly";
-            return RedirectToAction("Upsert","Renting", new { Id = Obj.RentingId });
+            return RedirectToAction("Upsert", "Renting", new { Id = Obj.RentingId });
         }
+
+        //Get
+        public IActionResult CreateAdditionalService(int id)
+        {
+            var CurrentRentingServices = _UnitOfWork.RentingServices.GetAll(u => u.RentingId == id);
+            var AdditionalServices = _UnitOfWork.AdditionalService.GetAll();
+            List<AdditionalService> NotIncluded = new List<AdditionalService>();
+
+            foreach (var l2 in AdditionalServices)
+            {
+                bool isIncluded = false;
+                foreach (var l1 in CurrentRentingServices)
+                {
+                    if (l1.AdditionalService.Id == l2.Id)
+                    {
+                        isIncluded = true;
+                        break;
+                    }
+                }
+
+                if (!isIncluded)
+                {
+                    NotIncluded.Add(l2);
+                }
+            }
+
+            return View(NotIncluded);
+        }
+        // Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateAdditionalService(int id, IFormCollection form)
+        {
+
+            var CurrentRenting = _UnitOfWork.Renting.GetFirstOrDefault(u => u.Id == id, includeProperties: "Car");
+                var AdditionalServices = _UnitOfWork.AdditionalService.GetAll();
+                List<AdditionalService> NotIncluded = new List<AdditionalService>();
+                var CurrentRentingServices = _UnitOfWork.RentingServices.GetAll(u => u.RentingId == id);
+
+                foreach (var l2 in AdditionalServices)
+                {
+                    bool isIncluded = false;
+                    foreach (var l1 in CurrentRentingServices)
+                    {
+                        if (l1.AdditionalService.Id == l2.Id)
+                        {
+                            isIncluded = true;
+                            break;
+                        }
+                    }
+
+                    if (!isIncluded)
+                    {
+                        NotIncluded.Add(l2);
+                    }
+                }
+
+                List<int> checkedIds = new List<int>();
+
+                foreach (var item in NotIncluded)
+                {
+                    string checkboxName = $"MyCheckboxes_{item.Id}";
+                    if (form.TryGetValue(checkboxName, out var value) && value == "true")
+                    {
+                        checkedIds.Add(item.Id);
+
+                        Renting_Services renting_Services = new Renting_Services
+                        {
+                            RentingId = id,
+                            AdditionalServiceId = item.Id
+                        };
+
+                        _UnitOfWork.RentingServices.Add(renting_Services);
+                        _UnitOfWork.Save();
+                        var rentingServicesPrice = _UnitOfWork.RentingServices.GetFirstOrDefault(u => u.id == renting_Services.id, includeProperties: "AdditionalService").AdditionalService.Price;
+
+                        // Calculate number of days
+                        DateTime firstDate = CurrentRenting.StartDate;
+                        DateTime secondDate = CurrentRenting.EndDate;
+                        TimeSpan difference = secondDate - firstDate;
+                        int days = difference.Days;
+
+                        CurrentRenting.RentalFees = CurrentRenting.Car.PriceByDay * days;
+                        CurrentRenting.ExtraCharge += rentingServicesPrice;
+                        CurrentRenting.TotalCharge = CurrentRenting.RentalFees + CurrentRenting.ExtraCharge;
+                        _UnitOfWork.Renting.Update(CurrentRenting);
+                        _UnitOfWork.Save();
+                        TempData["success"] = "Additional service added successfully";
+                    }
+                }
+                return RedirectToAction("Upsert", "Renting", new { Id = id });
+            
+        } 
 
         #region API CALLS
         [HttpGet]

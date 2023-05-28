@@ -15,24 +15,61 @@ namespace RentMyRide.Web.Areas.Customer.Controllers
         {
             _UnitOfWork = UnitOfWork;
         }
-        //GET
-        public IActionResult Index(int? page)
+        // GET
+        public IActionResult Index(int? page, List<string> makeFilter, string gearboxFilter, List<string> colorsFilter, List<string> locationFilter, double price, int places)
         {
             int pageSize = 5; // Number of cars to display per page
             int pageNumber = page ?? 1; // Current page number
 
             var carList = _UnitOfWork.Car.GetAll(includeProperties: "Location");
-            var CompletedRentings = _UnitOfWork.Renting.GetAll(includeProperties: "Car");
+            var completedRentings = _UnitOfWork.Renting.GetAll(u => u.Status == "Completed", includeProperties: "Car");
+            var completedReservations = _UnitOfWork.Reservation.GetAll(u => u.Status == "Completed" || u.Status == "Cancelled", includeProperties: "Car");
 
-            var availableCars = (from c in carList
-                                 join r in CompletedRentings on c.Id equals r.CarId into rGroup
-                                 from r in rGroup.DefaultIfEmpty()
-                                 where r == null || r.Status == "Completed"
-                                 select c).Distinct();
+            // Apply filters
+            var filteredCars = carList;
 
-            var Makes = carList.Select(c => c.Make).ToList();
-            var Colors = carList.Select(c => c.Color).Distinct().ToList();
-            var Gearboxes = carList.Select(c => c.Gearbox).Distinct().ToList();
+            if (makeFilter != null && makeFilter.Any())
+            {
+                filteredCars = filteredCars.Where(c => makeFilter.Contains(c.Make));
+            }
+            if (!string.IsNullOrEmpty(gearboxFilter))
+            {
+                filteredCars = filteredCars.Where(c => c.Gearbox == gearboxFilter);
+            }
+
+            if (colorsFilter != null && colorsFilter.Any())
+            {
+                filteredCars = filteredCars.Where(c => colorsFilter.Contains(c.Color));
+            }
+
+            if (locationFilter != null && locationFilter.Any())
+            {
+                filteredCars = filteredCars.Where(c => locationFilter.Contains(c.Location.Name));
+            }
+
+            if (price > 0)
+            {
+                filteredCars = filteredCars.Where(c => c.PriceByDay <= price);
+            }
+
+            if (places > 0)
+            {
+                filteredCars = filteredCars.Where(c => c.Places == places);
+            }
+
+            var availableCars = filteredCars.Where(c =>
+     (!_UnitOfWork.Renting.GetAll().Any(r => r.CarId == c.Id && r.Status == "Completed")
+     && (!_UnitOfWork.Reservation.GetAll().Any(res => res.CarId == c.Id && (res.Status == "Completed" || res.Status == "Cancelled"))))
+     || (_UnitOfWork.Reservation.GetAll().Any(res => res.CarId == c.Id && (res.Status == "Completed" || res.Status == "Cancelled")))
+     || (_UnitOfWork.Renting.GetAll().Any(r => r.CarId == c.Id && r.Status == "Completed"))
+ ).ToList();
+
+
+
+
+            var makes = carList.Select(c => c.Make).Distinct().ToList();
+            var colors = carList.Select(c => c.Color).Distinct().ToList();
+            var gearboxes = carList.Select(c => c.Gearbox).Distinct().ToList();
 
             var pagedCars = availableCars.ToPagedList(pageNumber, pageSize);
 
@@ -40,16 +77,22 @@ namespace RentMyRide.Web.Areas.Customer.Controllers
             {
                 cars = availableCars,
                 LocationsList = _UnitOfWork.Location.GetAll(),
-                MakesList = Makes,
-                ColorsList = Colors,
-                GearboxesList = Gearboxes,
-                Places = 0,
-                Price = 0,
-                PagedCars = pagedCars
+                MakesList = makes,
+                ColorsList = colors,
+                GearboxesList = gearboxes,
+                Places = places,
+                Price = price,
+                PagedCars = pagedCars,
+                SelectedMakeFilters = makeFilter,
+                SelectedGearboxFilter = gearboxFilter,
+                SelectedColorsFilters = colorsFilter,
+                SelectedLocationFilters = locationFilter
             };
 
             return View(availableCarsVM);
         }
+
+
 
     }
 }

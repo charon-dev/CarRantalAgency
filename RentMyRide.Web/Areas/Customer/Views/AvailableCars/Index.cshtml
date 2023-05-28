@@ -3,9 +3,9 @@
 
 @model RentMyRide.Models.ViewModels.AvailableCarsVM
 
-<div class="row">
-    <div id="accordionExample" class="col-lg-3 col-md-3 card border-dark mb-4 accordion" style="height:-webkit-fit-content">
-        <form id="TheForm" method="get" asp-controller="AvailableCarsController" asp-action="Index">
+<div class="row" >
+    <div class="col-lg-3 col-md-3 card border-dark mb-4 accordion" style="height:-webkit-fit-content">
+        <form id="form" method="get" asp-controller="AvailableCars" asp-action="Index">
             <h4 class="fw-bold text-center mt-3">Filters</h4>
 
              <hr />
@@ -20,10 +20,8 @@
 
                         @foreach (var make in Model.MakesList)
                         {
-                            <input class="form-check-input" type="checkbox" id="@make" value="@make" name="makeFilter">
-                            <label class="form-check-label" style="color:black" for="make">
-                                @make
-                            </label>
+                            <input class="form-check-input" type="checkbox" id="@make" value="@make" name="makeFilter" @(Model.SelectedMakeFilters?.Contains(make) == true ? "checked" : "")>
+                            <label class="form-check-label" style="color:black" for="@make">@make</label>
                             <br />
                         }
 
@@ -40,10 +38,10 @@
                 </h5>
                 <div id="collapseTwo" class="row accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" style="">
                     <div id="DGearbox" class="form-check mx-4 accordion-body">
-                        @foreach (var Gearbox in Model.GearboxesList)
+                        @foreach (var gearbox in Model.GearboxesList)
                         {
-                            <input class="form-check-input" type="radio" id="@Gearbox" value="@Gearbox" name="GearboxFilter">
-                            <label class="form-check-label" style="color:black" for="Gearbox">@Gearbox</label>
+                            <input class="form-check-input" type="radio" id="@gearbox" value="@gearbox" name="gearboxFilter" @(Model.SelectedGearboxFilter == gearbox ? "checked" : "")>
+                            <label class="form-check-label" style="color:black" for="@gearbox">@gearbox</label>
                             <br />
                         }
                     </div>
@@ -61,8 +59,8 @@
                     <div id="DColors" class="form-check mx-4 accordion-body">
                         @foreach (var color in Model.ColorsList)
                         {
-                            <input class="form-check-input" type="checkbox" id="@color" value="@color" name="colorsFilter">
-                            <label class="form-check-label" style="color:black" for="color">@color</label>
+                            <input class="form-check-input" type="checkbox" id="@color" value="@color" name="colorsFilter" @(Model.SelectedColorsFilters?.Contains(color) == true ? "checked" : "")>
+                            <label class="form-check-label" style="color:black" for="@color">@color</label>
                             <br />
                         }
                     </div>
@@ -79,10 +77,10 @@
                 </h5>
                 <div id="collapseFour" class="row accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample" style="">
                     <div id="DLocations" class="form-check mx-4 accordion-body">
-                        @foreach (var Location in Model.LocationsList)
+                        @foreach (var location in Model.LocationsList)
                         {
-                            <input class="form-check-input" type="checkbox" id="@Location.Name" value="@Location.Name" name="LocationFilter">
-                            <label class="form-check-label" style="color:black" for="Location">@Location.Name</label>
+                            <input class="form-check-input" type="checkbox" id="@location.Name" value="@location.Name" name="locationFilter" @(Model.SelectedLocationFilters?.Contains(location.Name) == true ? "checked" : "")>
+                            <label class="form-check-label" style="color:black" for="@location.Name">@location.Name</label>
                             <br />
                         }
                     </div>
@@ -102,16 +100,16 @@
                 <h5 id="Places">Places</h5>
                 <div id="DPlaces" class="form-check mx-1 input-group">
                     <div class="form-check col-12">
-                        <input class="form-check-input" type="radio" id="two" value="2" name="Places">
+                        <input class="form-check-input" type="radio" id="two" value="2" name="places">
                         <label class="form-check-label" style="color:black" for="two">2</label>
                     </div>
                     <div class="form-check col-12">
-                        <input class="form-check-input" type="radio" id="four" value="4" name="Places">
+                        <input class="form-check-input" type="radio" id="four" value="4" name="places">
                         <label class="form-check-label" style="color:black" for="four">4</label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" id="five" value="5" name="Places">
-                        <label class="form-check-label" style="color:black" for="Places">5</label>
+                        <input class="form-check-input" type="radio" id="five" value="5" name="places">
+                        <label class="form-check-label" style="color:black" for="five">5</label>
                     </div>
 
                     
@@ -119,81 +117,88 @@
             </div>
             <hr />
             <div class="row mt-2">
-                <button onclick="filterProducts()" type="button" class="btn btn-primary w-100" id="filterButton">
-                    filter
-                </button>
+                <button type="submit" class="btn btn-primary w-100 mb-1" id="filterButton">Filter</button>
+                <a class="btn btn-danger w-100" asp-controller="AvailableCars" asp-action="Index">Reset Filters</a>
             </div>
         </form>
 
     </div>
 
-    <div class="col">
-        @foreach (var item in Model.PagedCars)
+    <div class="col" id="CarsDiv">
+        @if (Model.PagedCars.Any())
         {
-            <div class="card border-dark mb-3">   
-                <div class="row p-4">
-                    <div class="col-md-4 col-sm-12">
-                        <img src="@item.img" class="w-100">
-                    </div>
-                    <div class="col">
-                        <h3 class="fw-bold">@item.Make @item.Model</h3>
-                        <div class="row mb-1">
-                            <i class="bi bi-people-fill col-4">@item.Places</i>
-                            <div class="col-4">
-                                @if (item.Gearbox == "Manual")
-                                {
-                                    <p class="fw-bold" style="cursor:pointer;width:fit-content" data-toggle="tooltip" data-placement="top" title="Manual">M</p>
-                                }
-                                else
-                                {
-                                    <p class="fw-bold" style="cursor:pointer;width:fit-content" data-toggle="tooltip" data-placement="top" title="Automatic">A</p>
-                                }
-                            </div>
-                            <div class="border border-primary col-4" style="background-color:@item.Color;width:10px;height:20px"></div>
+            @foreach (var item in Model.PagedCars)
+            {
+                <div class="card border-dark mb-3" >
+                    <div class="row p-4">
+                        <div class="col-md-4 col-sm-12">
+                            <img src="@item.img" class="w-100">
                         </div>
-                        <p><i class="bi bi-geo-alt-fill"></i> @item.Location.Name</p>
-                        <hr>
-                        <div class="row">
-                            <div class="col-6">
-                                <ul>
-                                    <li>
-                                        free cancellation
-                                    </li>
-                                    <li>
-                                        Identical tank
-                                    </li>
-                                    <li>
-                                        Unlimited kilometers
-                                    </li>
-                                </ul>
+                        <div class="col">
+                            <h3 class="fw-bold">@item.Make @item.Model</h3>
+                            <div class="row mb-1">
+                                <i class="bi bi-people-fill col-4">@item.Places</i>
+                                <div class="col-4">
+                                    @if (item.Gearbox == "Manual")
+                                    {
+                                        <p class="fw-bold" style="cursor:pointer;width:fit-content" data-toggle="tooltip" data-placement="top" title="Manual">M</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="fw-bold" style="cursor:pointer;width:fit-content" data-toggle="tooltip" data-placement="top" title="Automatic">A</p>
+                                    }
+                                </div>
+                                <div class="border border-primary col-4" style="background-color:@item.Color;width:10px;height:20px"></div>
                             </div>
-                            <div class="col-6">
-                                <ul>
-                                    <li>
-                                    collision damage waiver
-                                    </li>
-                                    <li>
-                                        Protection against theft
-                                    </li>
-                                    <li>
-                                        liability insurance
-                                    </li>
-                                </ul>
-                    
+                            <p><i class="bi bi-geo-alt-fill"></i> @item.Location.Name</p>
+                            <hr>
+                            <div class="row">
+                                <div class="col-6">
+                                    <ul>
+                                        <li>
+                                            free cancellation
+                                        </li>
+                                        <li>
+                                            Identical tank
+                                        </li>
+                                        <li>
+                                            Unlimited kilometers
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-6">
+                                    <ul>
+                                        <li>
+                                            collision damage waiver
+                                        </li>
+                                        <li>
+                                            Protection against theft
+                                        </li>
+                                        <li>
+                                            liability insurance
+                                        </li>
+                                    </ul>
+
+                                </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row" style="position:relative">
+                            <hr>
+                            <div class="row" style="position:relative">
                                 <p class="fw-bold">@item.PriceByDay MAD/Day</p>
                                 <a class="btn btn-primary" asp-area="Customer" asp-controller="Reservation" asp-action="Upsert" asp-route-CarId="@item.Id">Make a reservation</a>
+                            </div>
                         </div>
                     </div>
-                   @* *@
+
                 </div>
-        
-            </div>
+            }
+        }
+        else
+        {
+            <p>Sorry, we couldn't find any cars matching your criteria. Please try adjusting your filters or check back later.</p>
+
         }
     </div>
+
     <div class="pagination-container d-flex justify-content-center align-items-center my-5">
         <nav>
             <ul class="pagination">
@@ -243,17 +248,8 @@
             </ul>
         </nav>
     </div>
+
 </div>
 
-
-
-
-@section Scripts{
-    <script>
-      $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
-      });
-    </script>
-}
 
 

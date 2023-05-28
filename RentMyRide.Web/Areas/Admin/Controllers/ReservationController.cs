@@ -99,6 +99,89 @@ namespace RentMyRide.Web.Areas.Admin.Controllers
             return RedirectToAction("Update", "Reservation", new { ReservationId = Obj.ReservationId, CarId = CurrentCarID }); /*, */
         }
 
+        //Get
+        public IActionResult CreateAdditionalService(int id)
+        {
+            var CurrentReservationServices = _UnitOfWork.ReservationServices.GetAll(u => u.ReservationId == id);
+            var AdditionalServices = _UnitOfWork.AdditionalService.GetAll();
+            List<AdditionalService> NotIncluded = new List<AdditionalService>();
+
+            foreach (var l2 in AdditionalServices)
+            {
+                bool isIncluded = false;
+                foreach (var l1 in CurrentReservationServices)
+                {
+                    if (l1.AdditionalService.Id == l2.Id)
+                    {
+                        isIncluded = true;
+                        break;
+                    }
+                }
+
+                if (!isIncluded)
+                {
+                    NotIncluded.Add(l2);
+                }
+            }
+
+            return View(NotIncluded);
+        }
+
+        // Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateAdditionalService(int id, IFormCollection form)
+        {
+
+            var CurrentReservation = _UnitOfWork.Reservation.GetFirstOrDefault(u => u.Id == id, includeProperties: "Car");
+            var CurrentCarID = CurrentReservation.CarId;
+
+            var AdditionalServices = _UnitOfWork.AdditionalService.GetAll();
+            List<AdditionalService> NotIncluded = new List<AdditionalService>();
+            var CurrentReservationServices = _UnitOfWork.ReservationServices.GetAll(u => u.ReservationId == id);
+
+            foreach (var l2 in AdditionalServices)
+            {
+                bool isIncluded = false;
+                foreach (var l1 in CurrentReservationServices)
+                {
+                    if (l1.AdditionalService.Id == l2.Id)
+                    {
+                        isIncluded = true;
+                        break;
+                    }
+                }
+
+                if (!isIncluded)
+                {
+                    NotIncluded.Add(l2);
+                }
+            }
+
+            List<int> checkedIds = new List<int>();
+
+            foreach (var item in NotIncluded)
+            {
+                string checkboxName = $"MyCheckboxes_{item.Id}";
+                if (form.TryGetValue(checkboxName, out var value) && value == "true")
+                {
+                    checkedIds.Add(item.Id);
+
+                    Reservation_Services reservation_Services = new Reservation_Services
+                    {
+                        ReservationId = id,
+                        AdditionalServiceId = item.Id
+                    };
+
+                    _UnitOfWork.ReservationServices.Add(reservation_Services);
+                    _UnitOfWork.Save();
+                    TempData["success"] = "Additional service added successfully";
+                }
+            }
+            return RedirectToAction("Update", "Reservation", new { ReservationId = id, CarId = CurrentCarID }); /*, */
+
+        }
+
         #region API CALLS
         [HttpGet]
         public IActionResult GetAll()
