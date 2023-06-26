@@ -75,3 +75,29 @@
 }
 
 
+@media (max-width: 576px) {
+    body {
+        overflow-x: hidden;
+    }
+}
+
+@media (max-width: 767px) {
+    .hide {
+        display: none;
+    }
+}
+
+/* Adjust the table width and make it scroll horizontally on smaller screens */
+@media (max-width: 768px) {
+    #tblData {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+/* Make the table container responsive */
+#tblData_wrapper {
+    overflow-x: auto;
+
+}
+

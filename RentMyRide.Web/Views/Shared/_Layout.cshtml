@@ -22,12 +22,17 @@
     <link rel="stylesheet" href="~/css/BootsWatch.css" />
     <link rel="stylesheet" href="~/css/CustomStyle.css" />
 
+
 </head>
 <body >
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RentMyRide</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RentMyRide 
+                    <span class="logo" >
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAADNklEQVR4nNWV709SYRTH+T+a/0yl2ZqgsmVvShPMKLecMZV74UJAmFiQpYCIAqabGMlM8V7NX4ibzdKRm9pqWWokr0SnbTiR0x4cyO97EX3Rs323u7tzzod7zvc8sFj/0ynDqTyujNrj4E5gY5mFYrgyaveGcvhSzmCOmJypMy3ClPcYZn2QUSimzvQZUE7OYK6MCto8flpoRP0eP3ClY8GcoEUYybkpHwfXNjMoEoq9Jf8AHGy06Mxgjph0y2wrjKERSftXoBgn57IGlhJj2iJsNFgiIWkNlU4lEhJQjVIJqWH+pbgzoHD4oIXczUkKhw85PRBXXNCO5/HM4r3yrga4Y6rPKBRTZVWCyrnJGCq0fIMSCRUqEVMv4sAVJmyGGLHA9J8j2pmhGGKkBx6+0dECvf4g/N45AvWoP9zypHbyzZKg/esGY8PY1zaAZyVowQi6tXMUfk4C3zY2cKqsMnD5QszXxBeC6p4nwFc9g3sibZzu461AWBaSfgQ7EVxhanSrJ4eyXpPmiSEQ9j2Hj1++x+n91AI8UnanB/MsuLa8sz54txujNVREfEMt6ORs0OP5oMOuZhSK6VCWQcvQejy4orshMLg6DOO/JhnL2s6H3i4puLyH9OPwHkJflxRUEl50n8PgSjOmqTSLQob5HsbgDnkxUJ41xuOgPKugl7FP5t+onY3OF7Vv7OcE+AO74A/4M0IdLj0Y5aUwu83chCjWKOeCAbscf1cjMCqKoDs0YPNrHtgG2rI24YCtDXT4tbmU4FgZybcgwFuj66EUV4MOzwe9pJDWUGmNJkG5V4JGaYEmLVjYbIDhqU/R9eggroPPLYa/S09zks8tBoM4P5ASbF9yQq1CD/Oe07109DaDkSiE5cGaM0OXB2tQjVAnUXByVyfuaaVannQTIaF2HSwq4fhgC473NxkDI/EoF9WIzjgRkO6vESWFC+1vZgfeP41PAGvcUXDsnqUBx2rCrgYB/jKpO+jd5LuWpHhdLJjpSQXGm1rD93KquxpTvboY8I/pJnisaIszYUTonVDRDuszTecD1sWIED1IacJYESJB0j6zsj1MTXheeazTAsxMeF55F3L+AU19SdYcrX+hAAAAAElFTkSuQmCC">
+                    </span>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -82,17 +87,23 @@
         </main>
     </div>
 
-    <footer class="border-top bg-black footer text-muted">
-        <div class="container text-light row ">
-            <div class="col-12 mt-2">
-                <a href="#" class="text-info"><i class="bi bi-facebook mx-2"></i></a> <a href="#" class="text-info"><i class="bi bi-instagram mx-2"></i></a>  <a href="#" class="text-info"><i class="bi bi-twitter mx-2"></i></a>
-            </div>
-
-            <div class="col mx-2 mb-3">
-                <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-light">Privacy</a> | &copy; 2023 RentMyRide, Inc. All Rights Reserved
+    <footer class="bg-black footer text-muted p-4" style="line-height: 0px;position:inherit">
+        <div class="container text-light">
+            <div class="row">
+                <div class="col-12 col-md-6 text-center text-md-start mb-3">
+                   &copy; 2023 RentMyRide, Inc. All Rights Reserved
+                </div>
+                <div class="col-12 col-md-6 text-center text-md-end">
+                    <a href="#" class="text-info"><i class="bi bi-facebook my-2"></i></a>
+                    <a href="#" class="text-info"><i class="bi bi-instagram mx-2"></i></a>
+                    <a href="#" class="text-info"><i class="bi bi-twitter mx-2"></i></a>
+                </div>
             </div>
         </div>
     </footer>
+
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

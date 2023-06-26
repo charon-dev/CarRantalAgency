@@ -30,8 +30,8 @@ namespace RentMyRide.Web.Areas.Customer.Controllers
                 UsersCount = _UnitOfWork.ApplicationUser.GetAll().Count(),
                 LocationsList = _UnitOfWork.Location.GetAll(),
                 RentingCount = _UnitOfWork.Renting.GetAll().Count(),
-                OpenHours = _UnitOfWork.Location.GetFirstOrDefault(u => u.Id == 3).OpeningTime,
-                Cars=_UnitOfWork.Car.GetAll(u=>u.Year== "2023"),
+                OpenHours = "Monday-Friday: 9am-6pm, Saturday: 10am-4pm, Sunday: Closed",
+                Cars =_UnitOfWork.Car.GetAll(u=>u.Year== "2023"),
                 Feedback=new()
             };
             return View(homeVM);

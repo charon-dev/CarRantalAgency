@@ -1,12 +1,12 @@
 ﻿@model RentMyRide.Models.ViewModels.ReservationVM
 
 
-<form method="post" asp-action="Update">
+<form method="post" asp-action="Update" id="reservationForm">
     <input asp-for="reservation.Id" hidden />
     <input asp-for="reservation.CarId" hidden value="@Model.currentCar.Id" />
     <input asp-for="reservation.ApplicationUserId" hidden />
 
-    <div class="row">
+    <div class="row d-flex justify-content-center">
         <div class="border p-3 mt-4 row">
             <div class="col-12 pb-2">
                 <h2 class="text-primary">Update reservation</h2>
@@ -74,28 +74,46 @@
             </table>
 
             <div class="col-12">
-                @if (Model.reservation.Id != 0)
-                {
-                    <button type="submit" class="btn btn-primary" style="width:150px">Update</button>
-                }
-                else
-                {
-                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
-                }
-                <a asp-controller="Reservation" asp-action="Index" class="btn btn-outline-secondary" style="">
-                    See all reservations
-                </a>
+                <div class="row d-flex justify-content-center">
+                    @if (Model.reservation.Id != 0)
+                    {
+                        <button type="submit" class="btn btn-primary m-2 col-md-4  col-sm-12" style="width:150px">Update</button>
+                    }
+                    else
+                    {
+                        <button type="submit" onclick="return ValidateInput()" class="btn btn-primary m-2 col-md-4  col-sm-12" style="width:150px">Create</button>
+                    }
+                    <a asp-controller="Reservation" asp-action="Index" class="btn btn-outline-secondary col-md-4  col-sm-12 m-2" style="">
+                        See all reservations
+                    </a>
+                    <button type="button" class="btn btn-outline-primary m-2 col-md-4 col-sm-12" onclick="convertToRental()">
+                        Convert Reservation to Rental
+                    </button>
+                </div>
+                
             </div>
 
         </div>
     </div>
-
 </form>
-
+<form id="convertForm" method="post" asp-controller="Reservation" asp-action="Convertion">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@Model.reservation.Id" />
+</form>
 @section Scripts{
     @{
         <partial name="_ValidationScriptsPartial" />
     }
+    <script>
+       function convertToRental() {
+        var confirmed = confirm("Are you sure you want to convert this reservation to rental?");
+        if (confirmed) {
+            document.getElementById('reservationForm').removeAttribute('action');
+            document.getElementById('convertForm').submit();
+        }
+    }
+    </script>
 }
+
 
 

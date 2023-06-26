@@ -58,11 +58,11 @@ namespace RentMyRide.Web.Areas.Customer.Controllers
             }
 
             var availableCars = filteredCars.Where(c =>
-     (!_UnitOfWork.Renting.GetAll().Any(r => r.CarId == c.Id && r.Status == "Completed")
-     && (!_UnitOfWork.Reservation.GetAll().Any(res => res.CarId == c.Id && (res.Status == "Completed" || res.Status == "Cancelled"))))
-     || (_UnitOfWork.Reservation.GetAll().Any(res => res.CarId == c.Id && (res.Status == "Completed" || res.Status == "Cancelled")))
-     || (_UnitOfWork.Renting.GetAll().Any(r => r.CarId == c.Id && r.Status == "Completed"))
+     !_UnitOfWork.Renting.GetAll().Any(r => r.CarId == c.Id && r.Status == "Active")
+     && !_UnitOfWork.Reservation.GetAll().Any(res => res.CarId == c.Id && res.Status == "Active" )
  ).ToList();
+
+
 
 
 

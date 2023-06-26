@@ -5,7 +5,7 @@
     <input asp-for="car.Id" hidden />
     <input asp-for="car.img" hidden />
 
-    <div class="row">
+    <div class="row d-flex justify-content-center">
         <div class="col-10">
         <div class="border p-3 mt-4 row">
             <div class="col-12 pb-2">
@@ -59,17 +59,18 @@
                     </select>
                     <span asp-validation-for="car.Gearbox" class="text-danger"></span>
                 </div>
+                <div class="mb-3 col-6">
+                    <label asp-for="car.LocationId"></label>
+                    <select asp-for="car.LocationId" asp-items="@Model.LocationList" class="form-select">
+                        <option disabled selected>==Select List==</option>
+                    </select>
+                    <span asp-validation-for="car.LocationId" class="text-danger"></span>
+                </div>
             <div class="mb-3">
                 <label asp-for="car.img"></label>
                 <input id="UploadBox" type="file" name="file" class="form-control" />
             </div>
-            <div class="mb-3 col-6">
-                    <label asp-for="car.LocationId"></label>
-                <select asp-for="car.LocationId" asp-items="@Model.LocationList" class="form-select">
-                        <option disabled selected>==Select List==</option>
-                    </select>
-                <span asp-validation-for="car.LocationId" class="text-danger"></span>
-            </div>
+           
             <div class="col-12">
                 @if (Model.car.Id != 0)
                 {
@@ -85,10 +86,11 @@
             </div>
 
         </div>
+        
         </div>
-        <div class="col-2 mt-4">
+        <div class="col-md-2 col-sm-12 mt-4 hide">
             <img src="@Model.car.img"
-                 style="width: 100%;border-radius:5px;border:1px solid #bbb9b9" />
+                 style="border-radius:5px;border:1px solid #bbb9b9" />
         </div>
     </div>
 

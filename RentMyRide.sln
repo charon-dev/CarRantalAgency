@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentMyRide.Web", "RentMyRide.Web\RentMyRide.Web.csproj", "{A32EC3ED-DDE3-4B43-9EA5-6AC9D3E40C5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentMyRide.Utility", "RentMyRide.Utility\RentMyRide.Utility.csproj", "{7293AB41-CAAC-4208-9DBF-17BA1CD69604}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentMyRide.Models", "RentMyRide.Models\RentMyRide.Models.csproj", "{7D6053A9-25BB-41A9-A08C-6CCAE258D80F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentMyRide.DataAcess", "RentMyRide.DataAcess\RentMyRide.DataAcess.csproj", "{3C6141C7-62A7-4808-A90B-E8722EAC5A53}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A32EC3ED-DDE3-4B43-9EA5-6AC9D3E40C5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A32EC3ED-DDE3-4B43-9EA5-6AC9D3E40C5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A32EC3ED-DDE3-4B43-9EA5-6AC9D3E40C5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A32EC3ED-DDE3-4B43-9EA5-6AC9D3E40C5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7293AB41-CAAC-4208-9DBF-17BA1CD69604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7293AB41-CAAC-4208-9DBF-17BA1CD69604}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7293AB41-CAAC-4208-9DBF-17BA1CD69604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7293AB41-CAAC-4208-9DBF-17BA1CD69604}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D6053A9-25BB-41A9-A08C-6CCAE258D80F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D6053A9-25BB-41A9-A08C-6CCAE258D80F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D6053A9-25BB-41A9-A08C-6CCAE258D80F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D6053A9-25BB-41A9-A08C-6CCAE258D80F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C6141C7-62A7-4808-A90B-E8722EAC5A53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C6141C7-62A7-4808-A90B-E8722EAC5A53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C6141C7-62A7-4808-A90B-E8722EAC5A53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C6141C7-62A7-4808-A90B-E8722EAC5A53}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B5C235D2-2135-444E-85B1-1F41AD1CF967}
+	EndGlobalSection
+EndGlobal

@@ -5,7 +5,7 @@
     <input asp-for="reservation.Id" hidden />
     <input asp-for="reservation.CarId" hidden value="@Model.currentCar.Id" />
 
-    <div class="row">
+    <div class="row d-flex justify-content-center">
         <div class="border p-3 mt-4 row">
             <div class="col-12 pb-2">
                 <h2 class="text-primary">@(Model.reservation.Id != 0 ? "Update" : "Create") reservation</h2>
@@ -32,7 +32,7 @@
                     <span asp-validation-for="reservation.ApplicationUserId" class="text-danger"></span>
                 </div>
             }
-            <div class="mb-3 col-6 card border-secondary">
+            <div class="mb-3 col-sm-12  col-md-6 card border-secondary">
                 <div class="card-header">
                     Additional Services
                 </div>
@@ -55,10 +55,10 @@
                 }
                 else
                 {
-                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary" style="width:150px">Create</button>
+                    <button type="submit" onclick="return ValidateInput()" class="btn btn-primary mb-2" style="width:150px">Create</button>
                 }
-                <a asp-controller="Reservation" asp-action="Index" class="btn btn-outline-secondary" style="">
-                    See all reservations
+                <a asp-controller="Reservation" asp-action="Index" class="btn btn-outline-secondary mb-2 text-center" style="">
+                    reservations
                 </a>
             </div>
 

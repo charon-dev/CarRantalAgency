@@ -3,7 +3,7 @@
 
 <form method="post" asp-action="Upsert" enctype="multipart/form-data">
     <input asp-for="renting.Id" hidden />
-    <div class="row">
+    <div class="row d-flex justify-content-center">
         <div class="border p-3 mt-4 row">
             <div class="col-12 pb-2">
                 <h2 class="text-primary">@(Model.renting.Id != 0 ? "Update" : "Create") renting</h2>
@@ -68,7 +68,7 @@
             </div>
 
             @if (Model.renting.Id == 0) { 
-                <div class="mb-3 col-6 card border-secondary">
+                <div class="mb-3 col-md-6 card border-secondary col-sm-12">
                     <div class="card-header">
                         Additional Services
                     </div>

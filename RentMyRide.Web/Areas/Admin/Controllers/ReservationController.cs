@@ -182,6 +182,66 @@ namespace RentMyRide.Web.Areas.Admin.Controllers
 
         }
 
+
+        // Post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Convertion(int? id)
+        {
+            var CurrentReservation = _UnitOfWork.Reservation.GetFirstOrDefault(u => u.Id == id, includeProperties: "Car");
+            var ReservationServices = _UnitOfWork.ReservationServices.GetAll(u => u.ReservationId == id);
+
+            Renting renting = new Renting();
+
+            renting.StartDate = CurrentReservation.PickUpDate;
+            renting.EndDate = CurrentReservation.DropOffDate;
+            renting.CarId = CurrentReservation.CarId;
+            renting.ApplicationUserId = CurrentReservation.ApplicationUserId;
+            renting.Status ="Active";
+            renting.RentalFees =0;
+            renting.ExtraCharge =0;
+            renting.TotalCharge =0;
+            renting.PaymentMethod ="Cash";
+
+            _UnitOfWork.Renting.Add(renting);
+            _UnitOfWork.Save();
+            TempData["success"] = "renting created successfuly";
+
+            foreach (var item in ReservationServices)
+            {
+                Renting_Services renting_Services = new Renting_Services
+                {
+                    RentingId = renting.Id,
+                    AdditionalServiceId = item.AdditionalServiceId,
+                };
+
+                _UnitOfWork.RentingServices.Add(renting_Services);
+                _UnitOfWork.Save();
+                var Renting_servicesPrice = _UnitOfWork.RentingServices.GetFirstOrDefault(u => u.id == renting_Services.id, includeProperties: "AdditionalService").AdditionalService.Price;
+                var currentRenting = _UnitOfWork.Renting.GetFirstOrDefault(u => u.Id == renting.Id, includeProperties: "Car");
+                //Caluclate number of days :
+                DateTime firstDate = currentRenting.StartDate;
+                DateTime secondDate = currentRenting.EndDate;
+
+                TimeSpan difference = secondDate - firstDate;
+                int days = difference.Days;
+
+                currentRenting.RentalFees = currentRenting.Car.PriceByDay * days;
+                currentRenting.ExtraCharge += renting_Services.AdditionalService.Price;
+                currentRenting.TotalCharge = currentRenting.RentalFees + currentRenting.ExtraCharge;
+                _UnitOfWork.Renting.Update(currentRenting);
+                _UnitOfWork.Save();
+                TempData["success"] = "Additional service added successfuly";
+
+            }
+            CurrentReservation.Status = "Active";
+            _UnitOfWork.Reservation.Update(CurrentReservation);
+            _UnitOfWork.Save();
+            return RedirectToAction("Index", "Renting");
+
+
+        }
+
         #region API CALLS
         [HttpGet]
         public IActionResult GetAll()

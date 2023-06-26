@@ -7,7 +7,7 @@
 
 <partial name="_StatusMessage" for="StatusMessage" />
 <form id="profile-form" method="post">
-    <div class="row">
+    <div class="row d-flex justify-content-center">
         <div class="col-10">
             <div class="border p-3 mt-4 row">
                 <div class="col-12 pb-2">
@@ -23,11 +23,6 @@
                     <label asp-for="Input.PhoneNumber" class="form-label"></label>
                     <input asp-for="Input.PhoneNumber" class="form-control" />
                     <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-                </div>
-                <div class="mb-3 col-12">
-                    <label asp-for="Input.Email" class="form-label"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="mb-3 col-12">
                     <label asp-for="Input.OldPassword" class="form-label"></label>
